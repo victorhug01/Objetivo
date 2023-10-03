@@ -1,153 +1,162 @@
 import 'package:flutter/material.dart';
+import 'package:objetivo/src/screens/login/login_validation_mixin/login_mix_validator.dart';
+import 'package:objetivo/src/screens/student/student_home/studant_home.dart';
 import 'package:objetivo/src/theme/theme_class.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  IconData iconeVisibility = Icons.visibility;
-  IconData iconeVisibilityOff = Icons.visibility_off;
-  bool obscureTextValidation = true;
-  Icon teste = Icon(Icons.visibility_off);
+class _LoginPageState extends State<LoginPage> with ValidationMixinClass {
+  TextEditingController controllerEmail = TextEditingController();
+  TextEditingController controllerPassword = TextEditingController();
+  final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
+  IconData visibilityIcon = Icons.visibility;
+  IconData visibilityOffIcon = Icons.visibility_off;
+  bool isPasswordObscured = true;
+  Icon passwordVisibilityIcon = const Icon(Icons.visibility_off);
 
-  void obscureFunction() {
-    if (teste.icon == iconeVisibility) {
-      setState(() {
-        teste = Icon(iconeVisibilityOff);
-        obscureTextValidation = true;
-      });
-    } else if (teste.icon == iconeVisibilityOff) {
-      setState(() {
-        teste = Icon(iconeVisibility);
-        obscureTextValidation = false;
-      });
-    }
+  void togglePasswordVisibility() {
+    setState(() {
+      if (passwordVisibilityIcon.icon == visibilityIcon) {
+        passwordVisibilityIcon = Icon(visibilityOffIcon);
+        isPasswordObscured = true;
+      } else if (passwordVisibilityIcon.icon == visibilityOffIcon) {
+        passwordVisibilityIcon = Icon(visibilityIcon);
+        isPasswordObscured = false;
+      }
+    });
   }
+
+  InputDecoration buildInputDecoration(String labelText) {
+    return InputDecoration(
+      labelText: labelText,
+      labelStyle: const TextStyle(
+        fontSize: 17,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
+      enabledBorder: inputBorderComponent,
+      focusedBorder: inputBorderComponent,
+      disabledBorder: inputBorderComponent,
+    );
+  }
+
+  final InputBorder inputBorderComponent = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(50),
+    borderSide: BorderSide(
+      color: ColorThemeClass.colorPrimary,
+      width: 2.0,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
+        key: _keyForm,
         child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.all(8.0),
-                width: MediaQuery.of(context).size.width < 550 ? 350 : 450,
-                height: 50,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Email:",
-                    labelStyle: const TextStyle(
-                      fontSize: 17,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: ColorThemeClass.colorPrimary,
-                        width: 2.0,
+          child: SingleChildScrollView(
+            reverse: true,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  child: Image.asset(
+                    'assets/logo_objetivo.png',
+                    width: 250,
+                  ),
+                ),
+                const SizedBox(
+                  height: 90,
+                ),
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  width: MediaQuery.of(context).size.width < 550 ? 350 : 450,
+                  child: TextFormField(
+                    validator: isNotEmpyt,
+                    controller: controllerEmail,
+                    decoration: buildInputDecoration("Email:"),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  width: MediaQuery.of(context).size.width < 550 ? 350 : 450,
+                  child: TextFormField(
+                    validator: isNotEmpyt,
+                    controller: controllerPassword,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: isPasswordObscured,
+                    decoration: InputDecoration(
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: IconButton(
+                          onPressed: () {
+                            togglePasswordVisibility();
+                          },
+                          icon: passwordVisibilityIcon,
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: ColorThemeClass.colorPrimary,
-                        width: 2.0,
+                      labelText: "Senha:",
+                      labelStyle: const TextStyle(
+                        fontSize: 17,
                       ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      enabledBorder: inputBorderComponent,
+                      focusedBorder: inputBorderComponent,
+                      disabledBorder: inputBorderComponent,
                     ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: ColorThemeClass.colorPrimary,
-                        width: 2.0,
+                  ),
+                ),
+                Text(
+                  "Esqueceu a senha?",
+                  style: TextStyle(
+                    color: ColorThemeClass.linkColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  width: MediaQuery.of(context).size.width < 550 ? 220 : 320,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(15.0),
+                      backgroundColor: ColorThemeClass.colorPrimary,
+                    ),
+                    onPressed: () {
+                      if (_keyForm.currentState!.validate()) {
+                        if (controllerEmail.text == 'aluno@aluno' &&
+                            controllerPassword.text == '123') {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (_) => const StudantHomePage(),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: Text(
+                      "Avançar",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: ColorThemeClass.colorTertiary,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(8.0),
-                width: MediaQuery.of(context).size.width < 550 ? 350 : 450,
-                height: 50,
-                child: TextFormField(
-                  obscureText: obscureTextValidation,
-                  decoration: InputDecoration(
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: IconButton(
-                        onPressed: () {
-                          obscureFunction();
-                        },
-                        icon: teste,
-                      ),
-                    ),
-                    labelText: "Senha:",
-                    labelStyle: const TextStyle(
-                      fontSize: 17,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: ColorThemeClass.colorPrimary,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: ColorThemeClass.colorPrimary,
-                        width: 2.0,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(
-                        color: ColorThemeClass.colorPrimary,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Text(
-                "Esqueceu a senha?",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: ColorThemeClass.linkColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(30.0),
-                width: MediaQuery.of(context).size.width < 550 ? 200 : 300,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorThemeClass.colorPrimary
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    "Avançar",
-                    style: TextStyle(
-                      color: ColorThemeClass.colorTertiary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

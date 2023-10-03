@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:objetivo/src/screens/login/login.dart';
+import 'package:objetivo/src/screens/student/student_home/studant_home.dart';
 import 'package:objetivo/src/theme/theme_class.dart';
 
 class MyApp extends StatelessWidget {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: ColorThemeClass.colorPrimary),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const StudantHomePage(),
     );
   }
 }

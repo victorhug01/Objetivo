@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:objetivo/src/components/studant_component/bottom_navigator/bottom_navigator_studant.dart';
 
 class StudentChat extends StatefulWidget {
   const StudentChat({super.key});
@@ -11,9 +10,11 @@ class StudentChat extends StatefulWidget {
 class _StudentChatState extends State<StudentChat> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.red,
-      bottomNavigationBar: BottomNavigatorStudent(),
+      body: Center(
+        child: Text('Chamada'),
+      ),
     );
   }
 }

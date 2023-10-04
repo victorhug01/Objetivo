@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:objetivo/src/components/studant_component/bottom_navigator/bottom_navigator_studant.dart';
 import 'package:objetivo/src/components/studant_component/drawer_studant/drawer_component.dart';
 
 class StudantHomePage extends StatefulWidget {
@@ -13,7 +12,7 @@ class _StudantHomePageState extends State<StudantHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerStudantComponent(),
+      drawer: const DrawerStudantComponent(),
       appBar: AppBar(
         title: Image.asset(
           "assets/logo_objetivo.png",
@@ -23,11 +22,15 @@ class _StudantHomePageState extends State<StudantHomePage> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.notification_important_outlined),
+            icon: const Icon(Icons.notification_important_outlined),
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigatorStudent(),
+      body: ListView(
+        scrollDirection: Axis.vertical,
+        children: const [
+        ],
+      ),
     );
   }
 }

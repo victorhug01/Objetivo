@@ -32,6 +32,7 @@ class _PageViewClassState extends State<PageViewClass> {
       ),
       extendBody: true,
       bottomNavigationBar: SweetNavBar(
+        height: 30.0,
         currentIndex: _pageController.initialPage,
         backgroundColor: ColorThemeClass.colorPrimary,
         items: [
@@ -57,7 +58,10 @@ class _PageViewClassState extends State<PageViewClass> {
       sweetIcon: Icon(icon),
       sweetLabel: label,
       sweetBackground: ColorThemeClass.colorPrimary,
-      iconColors: [ColorThemeClass.colorTertiary, ColorThemeClass.colorTertiary],
+      iconColors: [
+        ColorThemeClass.colorTertiary,
+        ColorThemeClass.colorTertiary
+      ],
     );
   }
 }

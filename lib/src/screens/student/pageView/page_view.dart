@@ -32,14 +32,16 @@ class _PageViewClassState extends State<PageViewClass> {
       ),
       extendBody: true,
       bottomNavigationBar: SweetNavBar(
-        height: 30.0,
+        borderRadius: 100.0,
+        height: 70.0,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         currentIndex: _pageController.initialPage,
         backgroundColor: ColorThemeClass.colorPrimary,
         items: [
-          _buildNavItem(Icons.person_outline, 'Aluno'),
+          _buildNavItem(Icons.person, 'Aluno'),
           _buildNavItem(Icons.duo, 'Reunião'),
-          _buildNavItem(Icons.home, 'Home'),
-          _buildNavItem(Icons.chat, 'Chat'),
+          _buildNavItem(Icons.home_filled, 'Home'),
+          _buildNavItem(Icons.chat_bubble, 'Chat'),
           _buildNavItem(Icons.assignment, 'Tarefas'),
         ],
         onTap: (pagina) {
@@ -55,7 +57,7 @@ class _PageViewClassState extends State<PageViewClass> {
 
   SweetNavBarItem _buildNavItem(IconData icon, String label) {
     return SweetNavBarItem(
-      sweetIcon: Icon(icon),
+      sweetIcon: Icon(icon,size: 35),
       sweetLabel: label,
       sweetBackground: ColorThemeClass.colorPrimary,
       iconColors: [

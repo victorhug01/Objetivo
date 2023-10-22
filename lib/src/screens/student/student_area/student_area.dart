@@ -13,92 +13,76 @@ class _StudentAreaState extends State<StudentArea> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(0),
+      //   child: AppBar(
+      //     backgroundColor: ColorThemeClass.colorPrimary,
+      //   ),
+      // ),
+      body: ListView(
         children: [
-          const ContainerBackground(),
           Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                flex: 2,
+              Container(
+                decoration: BoxDecoration(
+                  color: ColorThemeClass.colorPrimary,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24),
+                  ),
+                ),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2.5,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircleAvatar(
+                      backgroundImage: AssetImage('assets/fundo_teste.jpg'),
+                      radius: 80,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Jennifer Lopes',
+                      style: GoogleFonts.montserrat(
+                        color: ColorThemeClass.colorTertiary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      'jenniferlopes@objetivo.com',
+                      style: GoogleFonts.montserrat(
+                        color: ColorThemeClass.colorTertiary,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      backgroundColor: ColorThemeClass.colorTertiary,
-                      radius: 80.0,
+                    SizedBox(
+                      height: 40,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Jennifer Lopes',
-                          style: GoogleFonts.montserrat(
-                            color: ColorThemeClass.colorTertiary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                          ),
-                        ),
-                        Text(
-                          'jennifer.lopes@objetivo.com',
-                          style: GoogleFonts.montserrat(
-                            color: ColorThemeClass.colorTertiary,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 18,
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              const Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
                     ContainerOptions(
                       title: 'Boletim',
                     ),
-                    ContainerOptions(
-                      title: 'Controle de faltas',
-                    ),
-                    ContainerOptions(
-                      title: '--Pesonalizado',
-                    ),
-                    ContainerOptions(
-                      title: '--Pesonalizado',
-                    ),
+                    ContainerOptions(title: 'Controle de faltas')
                   ],
                 ),
               ),
             ],
-          ),
+          )
         ],
-      ),
-    );
-  }
-}
-
-class ContainerBackground extends StatelessWidget {
-  const ContainerBackground({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 350,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: ColorThemeClass.colorPrimary,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
-        ),
       ),
     );
   }
